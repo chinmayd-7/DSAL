@@ -155,6 +155,17 @@ class bst{
 			swap(root->left);
 			swap(root->right);
 		}
+
+		int longestPath(Node* root) {
+			if (root == NULL)
+				return 0;
+		
+			int leftHeight = longestPath(root->left);
+			int rightHeight = longestPath(root->right);
+		
+			return max(leftHeight, rightHeight) + 1;
+		}
+		
 };
 int main(){
 	bst b;
