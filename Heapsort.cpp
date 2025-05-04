@@ -1,73 +1,66 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
 using namespace std;
-
-// Heapify function for Max Heap
-void maxHeapify(vector<int>& arr, int n, int i) {
-    int largest = i;         // Initialize largest as root
-    int left = 2 * i + 1;    // Left child index
-    int right = 2 * i + 2;   // Right child index
-
-    if (left < n && arr[left] > arr[largest])
-        largest = left;
-
-    if (right < n && arr[right] > arr[largest])
-        largest = right;
-
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        maxHeapify(arr, n, largest);
+class heap{
+    vector<int> arr;
+    int n;
+    public:
+    heap(){
+        
+        cout<<"Enter the number of elements: ";
+        cin>>n;
+        cout<<"Enter the elements: ";
+        for(int i=0;i<n;i++){
+            int x;
+            cin>>x;
+            arr.push_back(x);
+        }
     }
-}
-
-// Heapify function for Min Heap
-void minHeapify(vector<int>& arr, int n, int i) {
-    int smallest = i;         // Initialize smallest as root
-    int left = 2 * i + 1;     // Left child index
-    int right = 2 * i + 2;    // Right child index
-
-    if (left < n && arr[left] < arr[smallest])
-        smallest = left;
-
-    if (right < n && arr[right] < arr[smallest])
-        smallest = right;
-
-    if (smallest != i) {
-        swap(arr[i], arr[smallest]);
-        minHeapify(arr, n, smallest);
+    void buildmaxheap(){
+        for(int i=n/2-1;i>=0;i--){
+            maxheapify(i);
+        }
+        cout<<"maximum element "<<arr[0]<<endl;
     }
-}
-
-// Build Max Heap
-void buildMaxHeap(vector<int>& arr) {
-    int n = arr.size();
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        maxHeapify(arr, n, i);
+    void maxheapify(int i){
+        int largest=i;
+        int left=2*i+1;
+        int right=2*i+2;
+        if(left<n && arr[left]>arr[largest])
+            largest=left;
+        if(right<n && arr[right]>arr[largest])
+            largest=right;
+        if(largest!=i){
+            swap(arr[i],arr[largest]);
+            maxheapify(largest);
+        }
     }
-}
-
-// Build Min Heap
-void buildMinHeap(vector<int>& arr) {
-    int n = arr.size();
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        minHeapify(arr, n, i);
+    void buildminheap(){
+        for(int i=n/2-1;i>=0;i--){
+            minheapify(i);
+        }
+        cout<<"minimum element "<<arr[0]<<endl;
     }
-}
-
-int main() {
-    vector<int> marks = {75, 88, 92, 67, 81, 94, 73};
-
-    vector<int> maxHeap = marks; // copy of original array
-    vector<int> minHeap = marks;
-
-    buildMaxHeap(maxHeap);
-    buildMinHeap(minHeap);
-
-    int maxMark = maxHeap[0]; // Root of max heap
-    int minMark = minHeap[0]; // Root of min heap
-
-    cout << "Maximum Marks: " << maxMark << endl;
-    cout << "Minimum Marks: " << minMark << endl;
-
+    
+    void minheapify(int i){
+        int smallest=i;
+        int left=2*i+1;
+        int right=2*i+2;
+        if(left<n && arr[left]<arr[smallest])
+            smallest=left;
+        if(right<n && arr[right]<arr[smallest])
+            smallest=right;
+        if(smallest!=i){
+            swap(arr[i],arr[smallest]);
+            minheapify(smallest);
+        }
+    }
+};
+int main(){
+    heap h;
+    h.buildmaxheap();
+    
+    h.buildminheap();
+    // cout<<"Min heap built successfully!"<<endl;
     return 0;
 }
