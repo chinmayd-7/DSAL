@@ -46,46 +46,51 @@ class MST{
 					no_of_edges++;
 				}
 				else{
-					mat[i][j]=-1;
-					mat[j][i]=-1;
-				}
-					
-					
+					mat[i][j]=-1; 
+					mat[j][i]=-1; 
+				}		
 			}
 		}
 	}
 	
-	void prims(){
-		cout<<"\n******************************Using Prims************************************\n";
-		vector<int> visited(n,-1);
-		visited[0]=1;
-		int min_cost=0;
-		int row,col;
-		for(int k=0;k<n-1;k++){
-			int min=INT_MAX;
-			for(int i=0;i<n;i++){
-				
-				for(int j=0;j<n;j++){
-					if(visited[i]==1 && mat[i][j]!=-1 && visited[j]==-1){
-						if(mat[i][j]<min){
-							min=mat[i][j];
-							row=i;
-							col=j;
+	void prims() {
+		cout << "\n*Using Prims*\n";
+		vector<int> visited(n, -1);
+		visited[0] = 1;
+		int min_cost = 0;
+	
+		for (int k = 0; k < n - 1; k++) {
+			int min = INT_MAX;
+			int row = -1, col = -1;
+	
+			for (int i = 0; i < n; i++) {
+				if (visited[i] == 1) {
+					for (int j = 0; j < n; j++) {
+						if (visited[j] == -1 && mat[i][j] != -1 && mat[i][j] < min) {
+							min = mat[i][j];
+							row = i;
+							col = j;
 						}
 					}
 				}
 			}
-			min_cost=min_cost+min;
-				visited[col]=1;
-				mat[row][col]=-1;
-				mat[col][row]=-1;
-				cout<<vertices[row]<<"->"<<vertices[col]<<endl;
+	
+			if (min == INT_MAX) {
+				cout << "Graph is not connected.\n";
+				return;
+			}
+	
+			visited[col] = 1;
+			cout << vertices[row] << " -> " << vertices[col] << " (cost: " << min << ")\n";
+			min_cost += min;
 		}
-		cout<<"\ncost of MST "<<min_cost<<endl;
+	
+		cout << "\nTotal cost of MST: " << min_cost << endl;
 	}
 	
+	
 	void kruskals(){
-		cout<<"\n***************************Using Kruskals***************************************\n";
+		cout<<"\n**Using Kruskals\n";
 		vector<int> visited(n,-1);
 		Edge* temp;
 		int min_cost=0;
